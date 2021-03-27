@@ -1,4 +1,4 @@
-// Emacs style mode select	 -*- C++ -*- 
+// Emacs style mode select	 -*- C++ -*-
 //-----------------------------------------------------------------------------
 //
 // $Id:$
@@ -33,7 +33,7 @@
 
 #include "templates.h"
 #include "version.h"
-#include "doomdef.h" 
+#include "doomdef.h"
 #include "doomstat.h"
 #include "d_protocol.h"
 #include "d_netinf.h"
@@ -58,7 +58,7 @@
 #include "c_dispatch.h"
 #include "v_video.h"
 #include "w_wad.h"
-#include "p_local.h" 
+#include "p_local.h"
 #include "s_sound.h"
 #include "gstrings.h"
 #include "r_main.h"
@@ -183,15 +183,15 @@ gameaction_t	gameaction;
 gamestate_t 	gamestate = GS_STARTUP;
 
 int 			paused;
-bool 			sendpause;				// send a pause event next tic 
-bool			sendsave;				// send a save event next tic 
+bool 			sendpause;				// send a pause event next tic
+bool			sendsave;				// send a save event next tic
 bool			sendturn180;			// [RH] send a 180 degree turn next tic
 bool 			usergame;				// ok to save / end game
 bool			insave;					// Game is saving - used to block exit commands
 
-bool			timingdemo; 			// if true, exit with report on completion 
-bool 			nodrawers;				// for comparative timing purposes 
-bool 			noblit; 				// for comparative timing purposes 
+bool			timingdemo; 			// if true, exit with report on completion
+bool 			nodrawers;				// for comparative timing purposes
+bool 			noblit; 				// for comparative timing purposes
 
 bool	 		viewactive;
 
@@ -214,17 +214,17 @@ BYTE*			demobodyspot;
 size_t			maxdemosize;
 BYTE*			zdemformend;			// end of FORM ZDEM chunk
 BYTE*			zdembodyend;			// end of ZDEM BODY chunk
-bool 			singledemo; 			// quit after playing a demo from cmdline 
- 
-bool 			precache = true;		// if true, load all graphics at start 
- 
-wbstartstruct_t wminfo; 				// parms for world map / intermission 
- 
+bool 			singledemo; 			// quit after playing a demo from cmdline
+
+bool 			precache = true;		// if true, load all graphics at start
+
+wbstartstruct_t wminfo; 				// parms for world map / intermission
+
 short			consistancy[MAXPLAYERS][BACKUPTICS];
- 
- 
-#define MAXPLMOVE				(forwardmove[1]) 
- 
+
+
+#define MAXPLMOVE				(forwardmove[1])
+
 #define TURBOTHRESHOLD	12800
 
 float	 		normforwardmove[2] = {0x19, 0x32};		// [RH] For setting turbo from console
@@ -235,7 +235,7 @@ fixed_t 		angleturn[4] = {640, 1280, 320, 320};		// + slow turn
 fixed_t			flyspeed[2] = {1*256, 3*256};
 int				lookspeed[2] = {450, 512};
 
-#define SLOWTURNTICS	6 
+#define SLOWTURNTICS	6
 
 // [BB] This is a new school port, so cl_run defaults to true.
 CVAR (Bool,		cl_run,			true,	CVAR_GLOBALCONFIG|CVAR_ARCHIVE)		// Always run?
@@ -247,12 +247,12 @@ CVAR (Float,	m_pitch,		1.f,	CVAR_GLOBALCONFIG|CVAR_ARCHIVE)		// Mouse speeds
 CVAR (Float,	m_yaw,			1.f,	CVAR_GLOBALCONFIG|CVAR_ARCHIVE)
 CVAR (Float,	m_forward,		1.f,	CVAR_GLOBALCONFIG|CVAR_ARCHIVE)
 CVAR (Float,	m_side,			2.f,	CVAR_GLOBALCONFIG|CVAR_ARCHIVE)
- 
-int 			turnheld;								// for accelerative turning 
- 
-// mouse values are used once 
+
+int 			turnheld;								// for accelerative turning
+
+// mouse values are used once
 int 			mousex;
-int 			mousey; 		
+int 			mousey;
 
 FString			savegamefile;
 char			savedescription[SAVESTRINGSIZE];
@@ -260,8 +260,8 @@ char			savedescription[SAVESTRINGSIZE];
 // [RH] Name of screenshot file to generate (usually NULL)
 FString			shotfile;
 
-AActor* 		bodyque[BODYQUESIZE]; 
-int 			bodyqueslot; 
+AActor* 		bodyque[BODYQUESIZE];
+int 			bodyqueslot;
 
 void R_ExecuteSetViewSize (void);
 
@@ -354,7 +354,7 @@ CCMD (slot)
 
 		if (slot < NUM_WEAPON_SLOTS)
 		{
-			SendItemUse = players[consoleplayer].weapons.Slots[slot].PickWeapon (&players[consoleplayer], 
+			SendItemUse = players[consoleplayer].weapons.Slots[slot].PickWeapon (&players[consoleplayer],
 				!(dmflags2 & DF2_DONTCHECKAMMO));
 		}
 	}
@@ -485,7 +485,7 @@ CCMD (invnext)
 			}
 		}
 		if ((displaynametags & 1) && StatusBar && SmallFont && who->InvSel)
-			StatusBar->AttachMessage (new DHUDMessageFadeOut (SmallFont, who->InvSel->GetTag(), 
+			StatusBar->AttachMessage (new DHUDMessageFadeOut (SmallFont, who->InvSel->GetTag(),
 			1.5f, 0.80f, 0, 0, (EColorRange)*nametagcolor, 2.f, 0.35f), MAKE_ID('S','I','N','V'));
 	}
 	who->player->inventorytics = 5*TICRATE;
@@ -515,7 +515,7 @@ CCMD (invprev)
 			who->InvSel = item;
 		}
 		if ((displaynametags & 1) && StatusBar && SmallFont && who->InvSel)
-			StatusBar->AttachMessage (new DHUDMessageFadeOut (SmallFont, who->InvSel->GetTag(), 
+			StatusBar->AttachMessage (new DHUDMessageFadeOut (SmallFont, who->InvSel->GetTag(),
 			1.5f, 0.80f, 0, 0, (EColorRange)*nametagcolor, 2.f, 0.35f), MAKE_ID('S','I','N','V'));
 	}
 	who->player->inventorytics = 5*TICRATE;
@@ -703,7 +703,7 @@ void G_BuildTiccmd (ticcmd_t *cmd)
 
 		if (turnheld < SLOWTURNTICS)
 			tspeed += 2;		// slow turn
-		
+
 		if (Button_Right.bDown)
 		{
 			G_AddViewAngle (angleturn[tspeed]);
@@ -1028,7 +1028,7 @@ static void ChangeSpy (int changespy)
 
 	// Otherwise, cycle to the next player.
 	int pnum = consoleplayer;
-	if (changespy != SPY_CANCEL) 
+	if (changespy != SPY_CANCEL)
 	{
 		player_t *player = players[consoleplayer].camera->player;
 		// only use the camera as starting index if it's a valid player.
@@ -1264,7 +1264,7 @@ bool G_Responder (event_t *ev)
 	// any other key pops up menu if in demos
 	// [RH] But only if the key isn't bound to a "special" command
 	// [BB] We explicitly don't check if a client side demo is played to allow binding demo_pause, etc..
-	if (gameaction == ga_nothing && 
+	if (gameaction == ga_nothing &&
 		(demoplayback || gamestate == GS_DEMOSCREEN || gamestate == GS_TITLELEVEL))
 	{
 		const char *cmd = Bindings.GetBind (ev->data1);
@@ -1305,7 +1305,7 @@ bool G_Responder (event_t *ev)
 	// Handle chat input at the level and intermission screens.
 	if ( gamestate == GS_LEVEL || gamestate == GS_INTERMISSION )
 	{
-		if ( CHAT_Input( ev )) 
+		if ( CHAT_Input( ev ))
 			return ( true );
 
 		// [RC] If the player hits the spacebar, and they aren't in the game, ask them if they'd like to join.
@@ -1346,7 +1346,7 @@ bool G_Responder (event_t *ev)
 		break;
 
 	// [RH] mouse buttons are sent as key up/down events
-	case EV_Mouse: 
+	case EV_Mouse:
 		mousex = (int)(ev->x * mouse_sensitivity);
 		mousey = (int)(ev->y * mouse_sensitivity);
 		break;
@@ -1704,7 +1704,7 @@ void G_Ticker ()
 				{
 					// [EP] Clear all the HUD messages.
 					if ( StatusBar )
-						StatusBar->DetachAllMessages();	
+						StatusBar->DetachAllMessages();
 				}
 
 				GAME_ResetMap( );
@@ -1788,7 +1788,7 @@ void G_Ticker ()
 						if ( lastmanstanding )
 						{
 							ULONG	ulIdx;
-							
+
 							for ( ulIdx = 0; ulIdx < MAXPLAYERS; ulIdx++ )
 							{
 								if (( playeringame[ulIdx] == false ) || ( PLAYER_IsTrueSpectator( &players[ulIdx] )))
@@ -1836,7 +1836,7 @@ void G_Ticker ()
 						if ( possession )
 						{
 							ULONG	ulIdx;
-							
+
 							for ( ulIdx = 0; ulIdx < MAXPLAYERS; ulIdx++ )
 							{
 								if (( playeringame[ulIdx] == false ) || ( PLAYER_IsTrueSpectator( &players[ulIdx] )))
@@ -2213,10 +2213,10 @@ void G_PlayerReborn (int player, bool bGiveInventory)
 }
 
 //
-// G_CheckSpot	
+// G_CheckSpot
 // Returns false if the player cannot be respawned
-// at the given mapthing spot  
-// because something is occupying it 
+// at the given mapthing spot
+// because something is occupying it
 //
 
 bool G_CheckSpot (int playernum, FPlayerStart *mthing)
@@ -2276,9 +2276,9 @@ bool G_CheckSpot (int playernum, FPlayerStart *mthing)
 
 
 //
-// G_DeathMatchSpawnPlayer 
-// Spawns a player at one of the random death match spots 
-// called at level load and each death 
+// G_DeathMatchSpawnPlayer
+// Spawns a player at one of the random death match spots
+// called at level load and each death
 //
 
 // [RH] Returns the distance of the closest player to the given mapthing
@@ -2803,7 +2803,7 @@ void G_DoReborn (int playernum, bool freshbot)
 		{
 			AActor						*pActor;
 			TThinkerIterator<AActor>	Iterator;
-			
+
 			while ( (pActor = Iterator.Next( )))
 			{
 				if ( pActor->target == pOldBody )
@@ -2901,8 +2901,8 @@ void GAME_CheckMode( void )
 	}
 
 	// We have deathmatch starts, but nothing else.
-	if (( deathmatchstarts.Size( ) > 0 ) && 
-		( TemporaryTeamStarts.Size( ) == 0 ) && !bTeamStarts && 
+	if (( deathmatchstarts.Size( ) > 0 ) &&
+		( TemporaryTeamStarts.Size( ) == 0 ) && !bTeamStarts &&
 		 bPlayerStarts == false )
 	{
 		// Since we only have deathmatch starts, enable deathmatch, and disable teamgame/coop.
@@ -3175,7 +3175,7 @@ void GAME_CheckMode( void )
 	}
 	// [BB] If we are using teams and the teams are supposed to be selected automatically, select the team
 	// for all non-spectator players that are not on a team yet now.
-	else if ( dmflags2 & DF2_NO_TEAM_SELECT ) 
+	else if ( dmflags2 & DF2_NO_TEAM_SELECT )
 	{
 		for ( ULONG ulIdx = 0; ulIdx < MAXPLAYERS; ulIdx++ )
 		{
@@ -3825,7 +3825,7 @@ void GAME_ResetMap( bool bRunEnterScripts )
 		// If this object belongs to someone's inventory, and it originally spawned on the
 		// level, respawn the item in its original location, but don't take it out of the
 		// player's inventory.
-		if (( pActor->IsKindOf( RUNTIME_CLASS( AInventory ))) && 
+		if (( pActor->IsKindOf( RUNTIME_CLASS( AInventory ))) &&
 			( static_cast<AInventory *>( pActor )->Owner ))
 		{
 			if ( pActor->ulSTFlags & STFL_LEVELSPAWNED )
@@ -4586,15 +4586,29 @@ void G_DoLoadGame ()
 //
 void G_SaveGame (const char *filename, const char *description)
 {
+	Printf ("SMOLA: save game called.\n");
 	if (sendsave || gameaction == ga_savegame)
 	{
 		Printf ("A game save is still pending.\n");
 		return;
 	}
 	savegamefile = filename;
+	Printf(savegamefile); // SMOLA
+	Printf ("\n"); // SMOLA
 	strncpy (savedescription, description, sizeof(savedescription)-1);
 	savedescription[sizeof(savedescription)-1] = '\0';
-	sendsave = true;
+	if (NETWORK_GetState() == NETSTATE_SERVER) {
+		if (gamestate == GS_LEVEL) {
+			G_DoSaveGame (true, savegamefile, savedescription);
+			gameaction = ga_nothing;
+			savegamefile = "";
+			savedescription[0] = '\0';
+		} else {
+			Printf ("SMOLA: Not in level\n");
+		}
+	} else {
+		sendsave = true;
+	}
 }
 
 FString G_BuildSaveName (const char *prefix, int slot)
@@ -4649,8 +4663,8 @@ void G_DoAutoSave ()
 	UCVarValue num;
 	const char *readableTime;
 	int count = autosavecount != 0 ? autosavecount : 1;
-	
-	if (nextautosave == -1) 
+
+	if (nextautosave == -1)
 	{
 		nextautosave = (autosavenum + 1) % count;
 	}
@@ -4730,7 +4744,8 @@ static void PutSaveComment (FILE *file)
 
 static void PutSavePic (FILE *file, int width, int height)
 {
-	if (width <= 0 || height <= 0 || !storesavepic)
+	// SMOLA: no pic for servers
+	if (width <= 0 || height <= 0 || !storesavepic || NETWORK_GetState() == NETSTATE_SERVER)
 	{
 		M_CreateDummyPNG (file);
 	}
@@ -4742,6 +4757,7 @@ static void PutSavePic (FILE *file, int width, int height)
 
 void G_DoSaveGame (bool okForQuicksave, FString filename, const char *description)
 {
+	Printf ("SMOLA: G_DoSaveGame...\n");
 	char buf[100];
 
 	// Do not even try, if we're not in a level. (Can happen after
@@ -4757,7 +4773,9 @@ void G_DoSaveGame (bool okForQuicksave, FString filename, const char *descriptio
 	}
 
 	insave = true;
+	Printf ("SMOLA: calling snapshot...\n");
 	G_SnapshotLevel ();
+	Printf ("SMOLA: snapshot done!\n");
 
 	FILE *stdfile = fopen (filename, "wb");
 
@@ -4836,7 +4854,7 @@ void G_DoSaveGame (bool okForQuicksave, FString filename, const char *descriptio
 		}
 		fclose(stdfile);
 	}
-	if (success) 
+	if (success)
 	{
 		if (longsavemessages) Printf ("%s (%s)\n", GStrings("GGSAVED"), filename.GetChars());
 		else Printf ("%s\n", GStrings("GGSAVED"));
@@ -4851,7 +4869,7 @@ void G_DoSaveGame (bool okForQuicksave, FString filename, const char *descriptio
 		delete level.info->snapshot;
 		level.info->snapshot = NULL;
 	}
-		
+
 	insave = false;
 }
 
@@ -4907,7 +4925,7 @@ void G_ReadDemoTiccmd (ticcmd_t *cmd, int player)
 			break;
 		}
 	}
-} 
+}
 
 bool stoprecording;
 
@@ -4978,7 +4996,7 @@ void G_RecordDemo (const char* name)
 	DefaultExtension (demoname, ".lmp");
 	maxdemosize = 0x20000;
 	demobuffer = (BYTE *)M_Malloc (maxdemosize);
-	demorecording = true; 
+	demorecording = true;
 }
 
 
@@ -5312,7 +5330,7 @@ void G_DoPlayDemo (void)
 	}
 	else
 	{
-		// don't spend a lot of time in loadlevel 
+		// don't spend a lot of time in loadlevel
 		precache = false;
 		demonew = true;
 		if (mapname[0] != 0)
@@ -5411,10 +5429,10 @@ bool G_CheckDemoStatus (void)
 		}
 		else
 		{
-			D_AdvanceDemo (); 
+			D_AdvanceDemo ();
 		}
 
-		return true; 
+		return true;
 	}
 
 	if (demorecording)
@@ -5446,13 +5464,13 @@ bool G_CheckDemoStatus (void)
 		formlen = demobuffer + 4;
 		WriteLong (int(demo_p - demobuffer - 8), &formlen);
 
-		bool saved = M_WriteFile (demoname, demobuffer, int(demo_p - demobuffer)); 
-		M_Free (demobuffer); 
+		bool saved = M_WriteFile (demoname, demobuffer, int(demo_p - demobuffer));
+		M_Free (demobuffer);
 		demorecording = false;
 		stoprecording = false;
 		if (saved)
 		{
-			Printf ("Demo %s recorded\n", demoname.GetChars()); 
+			Printf ("Demo %s recorded\n", demoname.GetChars());
 		}
 		else
 		{
@@ -5460,7 +5478,7 @@ bool G_CheckDemoStatus (void)
 		}
 	}
 
-	return false; 
+	return false;
 }
 
 // [BC] New console command that freezes all actors (except the player

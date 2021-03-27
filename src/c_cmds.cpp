@@ -841,7 +841,7 @@ CCMD (pukename)
 		int argstart = 2;
 		int arg[4] = { 0, 0, 0, 0 };
 		int argn = 0, i;
-		
+
 		if (argc > 2)
 		{
 			if (stricmp(argv[2], "always") == 0)
@@ -1156,7 +1156,8 @@ UNSAFE_CCMD (load)
 	if (( NETWORK_GetState( ) != NETSTATE_SINGLE ) && ( NETWORK_GetState( ) != NETSTATE_SINGLE_MULTIPLAYER ))
 	{
 		Printf ("cannot load during a network game\n");
-		return;
+		Printf ("SMOLA: But let's try\n");
+		//return;
 	}
 	FString fname = argv[1];
 	DefaultExtension (fname, ".zds");
@@ -1173,6 +1174,7 @@ UNSAFE_CCMD (load)
 
 UNSAFE_CCMD (save)
 {
+	 Printf ("SMOLA: saving game cmd...\n");
     // [BB] This function may not be used by ConsoleCommand.
     if ( ACS_IsCalledFromConsoleCommand() )
         return;
@@ -1198,11 +1200,13 @@ UNSAFE_CCMD (save)
         return;
     }
 
+	Printf ("SMOLA: skipping save mp block...\n");
 	// [BB] No saving in multiplayer.
 	if ( NETWORK_GetState( ) == NETSTATE_CLIENT )
 	{
 		Printf ("You cannot save the game in multiplayer.\n");
-		return;
+		Printf ("SMOLA: But let's try ...");
+		//return;
 	}
 
 	// [BB] Saving bots is not supported yet.
@@ -1281,7 +1285,7 @@ CCMD(info)
 	AActor *linetarget;
 
 	if (CheckCheatmode () || players[consoleplayer].mo == NULL) return;
-	P_AimLineAttack(players[consoleplayer].mo,players[consoleplayer].mo->angle,MISSILERANGE, 
+	P_AimLineAttack(players[consoleplayer].mo,players[consoleplayer].mo->angle,MISSILERANGE,
 		&linetarget, 0,	ALF_CHECKNONSHOOTABLE|ALF_FORCENOSMART);
 	if (linetarget)
 	{
@@ -1410,11 +1414,11 @@ CCMD(nextmap)
 	}
 
 	// [TL] Get the next map if available.
-	const char * next = G_GetExitMap( );	
-	
+	const char * next = G_GetExitMap( );
+
 	// [BB] G_GetExitMap() can return an empty string.
 	if ( next && strncmp(next, "enDSeQ", 6) && ( strlen ( next ) > 0 ) )
-	{	
+	{
 		// Fuck that DEM shit!
 		if ( NETWORK_GetState( ) == NETSTATE_SERVER )
 		{
@@ -1430,7 +1434,7 @@ CCMD(nextmap)
 			else
 			{
 				Net_WriteByte (DEM_CHANGEMAP);
-			}			
+			}
 
 			Net_WriteString( next );
 		}
@@ -1449,7 +1453,7 @@ CCMD(nextmap)
 		return;
 	}
 	char *next = NULL;
-	
+
 	if (*level.nextmap)
 		next = level.nextmap;
 
@@ -1487,7 +1491,7 @@ CCMD(nextsecret)
 
 	// [TL] Get the secret level or next map if not available.
 	const char * next = G_GetSecretExitMap();
-	
+
 	// [BB] G_GetSecretExitMap() can return an empty string.
 	if ( next && strncmp(next, "enDSeQ", 6) && ( strlen ( next ) > 0 ) )
 	{
@@ -1521,7 +1525,7 @@ CCMD(nextsecret)
 		return;
 	}
 	char *next = NULL;
-	
+
 	if (*level.secretmap)
 		next = level.secretmap;
 
@@ -1657,7 +1661,7 @@ CCMD (ifspectator)
 			cmdTotal += argv[i];
 		}
 
-		
+
 		AddCommandString(cmdTotal.LockBuffer());
 		cmdTotal.UnlockBuffer();
 	}

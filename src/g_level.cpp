@@ -408,7 +408,7 @@ void G_InitNew (const char *mapname, bool bTitleLevel)
 	{
 		UnlatchCVars ();
 	}
-	
+
 	G_VerifySkill();
 	if ( NETWORK_InClientMode() == false )
 	{
@@ -630,7 +630,7 @@ void G_ChangeLevel(const char *levelname, int position, int flags, int nextSkill
 		{
 			levelname = level.nextmap;	// If there is already an end sequence please leave it alone!
 		}
-		else 
+		else
 		{
 			// [BB] The server doesn't support end sequences, so just return to the current map.
 			if ( NETWORK_GetState( ) == NETSTATE_SERVER )
@@ -668,8 +668,8 @@ void G_ChangeLevel(const char *levelname, int position, int flags, int nextSkill
 
 	startpos = position;
 	gameaction = ga_completed;
-		
-	if (nextinfo != NULL) 
+
+	if (nextinfo != NULL)
 	{
 		if (thiscluster != nextcluster || (thiscluster && !(thiscluster->flags & CLUSTER_HUB)))
 		{
@@ -808,7 +808,7 @@ const char *G_GetSecretExitMap()
 			nextmap = level.secretmap;
 		}
 	}
-	
+
 	// [TL] Advance to the next map in the rotation if no secret level.
 	return (nextmap) ? nextmap : G_GetExitMap( );
 }
@@ -827,10 +827,10 @@ void G_ExitLevel (int position, bool keepFacing)
 		return;
 	}
 
-	G_ChangeLevel(G_GetExitMap(), position, keepFacing ? CHANGELEVEL_KEEPFACING : 0); 
+	G_ChangeLevel(G_GetExitMap(), position, keepFacing ? CHANGELEVEL_KEEPFACING : 0);
 }
 
-void G_SecretExitLevel (int position) 
+void G_SecretExitLevel (int position)
 {
 	// [TL] Prevent ending a map during survival countdown.
 	if (( survival ) &&
@@ -850,7 +850,7 @@ void G_SecretExitLevel (int position)
 void SERVERCONSOLE_UpdateScoreboard( void );
 void G_DoCompleted (void)
 {
-	int i; 
+	int i;
 
 	gameaction = ga_nothing;
 
@@ -1037,12 +1037,12 @@ void DAutosaver::Tick ()
 
 //==========================================================================
 //
-// G_DoLoadLevel 
+// G_DoLoadLevel
 //
 //==========================================================================
 
-extern gamestate_t 	wipegamestate; 
- 
+extern gamestate_t 	wipegamestate;
+
 void SERVERCONSOLE_SetCurrentMapname( const char *pszString );
 void SERVERCONSOLE_UpdatePlayerInfo( LONG lPlayer, ULONG ulUpdateFlags );
 void G_DoLoadLevel (int position, bool autosave)
@@ -1270,7 +1270,7 @@ void G_DoLoadLevel (int position, bool autosave)
 			case GAMEMODE_DOMINATION:
 
 				domination.ForceSet( Val, CVAR_Bool );
-				break;	
+				break;
 			default:
 
 				I_Error( "G_DoLoadLevel: Invalid campaign game type, %d!", pInfo->GameMode );
@@ -1373,7 +1373,7 @@ void G_DoLoadLevel (int position, bool autosave)
 				"\36\36\36\36\36\36\36\36\36\36\36\36\37\n\n"
 				TEXTCOLOR_BOLD "%s - %s\n\n",
 				level.mapname, level.LevelName.GetChars());
-		
+
 		// [RC] Update the G15 display.
 		G15_NextLevel( level.mapname, level.LevelName.GetChars() );
 	}
@@ -1383,7 +1383,7 @@ void G_DoLoadLevel (int position, bool autosave)
 
 	if (gamestate != GS_TITLELEVEL)
 	{
-		gamestate = GS_LEVEL; 
+		gamestate = GS_LEVEL;
 	}
 
 	// Set the sky map.
@@ -1403,7 +1403,7 @@ void G_DoLoadLevel (int position, bool autosave)
 	R_InitSkyMap ();
 
 	for (i = 0; i < MAXPLAYERS; i++)
-	{ 
+	{
 		// [BC] Added teamgame, invasion.
 		if (playeringame[i] && ((deathmatch || teamgame || invasion) || players[i].playerstate == PST_DEAD))
 			players[i].playerstate = PST_ENTER;	// [BC]
@@ -1495,14 +1495,14 @@ void G_DoLoadLevel (int position, bool autosave)
 		P_StartLightning ();
 	}
 
-	gameaction = ga_nothing; 
+	gameaction = ga_nothing;
 
 	// clear cmd building stuff
 	ResetButtonStates ();
 
 	SendItemUse = NULL;
 	SendItemDrop = NULL;
-	mousex = mousey = 0; 
+	mousex = mousey = 0;
 	sendpause = sendsave = sendturn180 = SendLand = false;
 	LocalViewAngle = 0;
 	LocalViewPitch = 0;
@@ -1569,7 +1569,7 @@ void G_DoLoadLevel (int position, bool autosave)
 	if ( StatusBar )
 		StatusBar->AttachToPlayer (&players[consoleplayer]);
 	P_DoDeferedScripts ();	// [RH] Do script actions that were triggered on another map.
-	
+
 	// [BC] Support for client-side demos.
 	if (demoplayback || ( CLIENTDEMO_IsPlaying( )) || oldgs == GS_STARTUP || oldgs == GS_TITLELEVEL)
 		C_HideConsole ();
@@ -1634,19 +1634,19 @@ void G_DoLoadLevel (int position, bool autosave)
 
 //==========================================================================
 //
-// G_WorldDone 
+// G_WorldDone
 //
 //==========================================================================
 
-void G_WorldDone (void) 
-{ 
+void G_WorldDone (void)
+{
 	cluster_info_t *nextcluster;
 	cluster_info_t *thiscluster;
 
 	// [BC] Clients don't need to do this, otherwise they'll try to load the map on their end.
 	if ( NETWORK_InClientMode() == false )
 	{
-		gameaction = ga_worlddone; 
+		gameaction = ga_worlddone;
 	}
 
 	if (level.flags & LEVEL_CHANGEMAPCHEAT)
@@ -1709,14 +1709,14 @@ void G_WorldDone (void)
 			}
 		}
 	}
-} 
- 
+}
+
 //==========================================================================
 //
 //
 //==========================================================================
 
-void G_DoWorldDone (void) 
+void G_DoWorldDone (void)
 {
 	ULONG	ulIdx;
 
@@ -1758,8 +1758,8 @@ void G_DoWorldDone (void)
 //			ASTAR_ClearPath( ulIdx );
 		}
 	}
-} 
- 
+}
+
 //==========================================================================
 //
 // G_StartTravel
@@ -1926,7 +1926,7 @@ void G_FinishTravel ()
 		}
 	}
 }
- 
+
 //==========================================================================
 //
 // [BC] G_AllowTravel
@@ -2138,7 +2138,7 @@ void G_AirControlChanged ()
 void G_SerializeLevel (FArchive &arc, bool hubLoad)
 {
 	int i = level.totaltime;
-	
+
 	// [BC] In client mode, we just want to save the lines we've seen.
 	if ( NETWORK_InClientMode() )
 	{
@@ -2263,7 +2263,14 @@ void G_SerializeLevel (FArchive &arc, bool hubLoad)
 	FCanvasTextureInfo::Serialize (arc);
 	AM_SerializeMarkers(arc);
 
-	P_SerializePlayers (arc, hubLoad);
+	// SMOLA: skip players in server
+	if ( NETWORK_GetState() != NETSTATE_SERVER ) {
+		Printf("SMOLA: Saving players...");
+		P_SerializePlayers (arc, hubLoad);
+	} else {
+		Printf("SMOLA: Skipped saving players!");
+	}
+
 	P_SerializeSounds (arc);
 	if (arc.IsLoading())
 	{
@@ -2425,7 +2432,7 @@ void G_WriteSnapshots (FILE *file)
 	}
 
 	FPNGChunkArchive *arc = NULL;
-	
+
 	// Write out which levels have been visited
 	for (i = 0; i < wadlevelinfos.Size(); ++i)
 	{
@@ -2722,7 +2729,7 @@ CCMD( listmusic )
 			musicNames.insert( info->Music );
 		}
 	}
-	
+
 	if ( musicNames.size() <= 0 )
 	{
 		Printf( "No music lumps loaded." );
@@ -2734,11 +2741,11 @@ CCMD( listmusic )
 	{
 		if ( it->Len() <= 0)
 			continue;
-		
+
 		if ( (*it)[0] == '$' )
 		{
 			Printf( "   D_%s\n", GStrings( it->GetChars() + 1 ) );
-		} 
+		}
 		else
 		{
 			Printf( "  %s\n", it->GetChars() );
